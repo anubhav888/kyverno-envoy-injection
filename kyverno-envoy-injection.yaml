@@ -20,7 +20,7 @@ spec:
         - key: "{{ request.object.metadata.labels.nirmata.io/service.name || '' }}"
           operator: Equals
           value: static-file
-           mutate:
+      mutate:
         patchStrategicMerge:
           spec:
             containers
