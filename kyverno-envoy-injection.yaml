@@ -37,6 +37,6 @@ spec:
               - name: envoy-config
               mountPath: "/run/envoy"
               readOnly: true
-            - name: spire-agent-socket
+              - name: spire-agent-socket
               mountPath: /run/spire/sockets
               readOnly: true
