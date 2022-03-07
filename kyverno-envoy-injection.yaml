@@ -9,8 +9,8 @@ spec:
         any:
         - resources:
             kinds:
-              namespaces:
-              - nirmata
+            namespaces:
+            - nirmata
             kinds:
             - Pod
             selector:
