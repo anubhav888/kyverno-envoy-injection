@@ -8,10 +8,7 @@ spec:
       match:
         any:
         - resources:
-            kinds:
-            namespaces:
-            - nirmata
-            kinds:
+            kind:
             - Pod
             selector:
               matchLabels:
