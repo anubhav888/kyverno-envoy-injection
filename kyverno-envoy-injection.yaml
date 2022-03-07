@@ -14,10 +14,15 @@ spec:
         any:
         - resources:
             kinds:
-              - Pod
+            - namespace
+            names:
+            - nirmata
+        - resources:
+            kinds:
+            - Pod
       preconditions:
         any:
-        - key: "{{ request.object.metadata.labels.nirmata.io/service.name || '' }}"
+        - key: "{{ request.object.metadata.labels.app || '' }}"
           operator: Equals
           value: kafka
       mutate:
