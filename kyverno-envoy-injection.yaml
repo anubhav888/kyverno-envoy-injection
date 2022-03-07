@@ -19,7 +19,7 @@ spec:
         any:
         - key: "{{ request.object.metadata.labels.nirmata.io/service.name || '' }}"
           operator: Equals
-          value: static-file
+          value: kafka
       mutate:
         patchStrategicMerge:
           spec:
