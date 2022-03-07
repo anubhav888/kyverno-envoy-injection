@@ -1,30 +1,29 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: envoy-sidecar-injection
+  name: envoy-injection
 spec:
   rules:
-    - name: match-pod-label
-      match:
-        any:
-        - resources:
-            kind:
-            - Pod
-            selector:
-              matchLabels:
-                app: kafka
-      mutate:
-        patchStrategicMerge:
-          spec:
-            containers
-            - name: envoy
-              image: envoyproxy/envoy-alpine:v1.14.1
-              imagePullPolicy: Always
-              args: ["-l", "debug", "--local-address-ip-version", "v4", "-c", "/run/envoy/envoy.yaml", "--base-id", "1"]
-              volumeMounts:
-              - name: envoy-config
-              mountPath: "/run/envoy"
-              readOnly: true
-              - name: spire-agent-socket
-              mountPath: /run/spire/sockets
-              readOnly: true
+  - name: insert-container
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          names:
+          - "kafka-*"
+     mutate:
+       patchStrategicMerge:
+         spec:
+           containers
+           - name: envoy
+             image: envoyproxy/envoy-alpine:v1.14.1
+             imagePullPolicy: Always
+             args: ["-l", "debug", "--local-address-ip-version", "v4", "-c", "/run/envoy/envoy.yaml", "--base-id", "1"]
+             volumeMounts:
+             - name: envoy-config
+             mountPath: "/run/envoy"
+             readOnly: true
+             - name: spire-agent-socket
+             mountPath: /run/spire/sockets
+             readOnly: true
